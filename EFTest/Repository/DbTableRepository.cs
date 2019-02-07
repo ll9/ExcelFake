@@ -13,10 +13,12 @@ namespace EFTest.Repository
     {
         private const string TableName = nameof(SDDataTable);
         private readonly AdoContext _context;
+        private readonly DbColumnRepository _dbColumnRepository;
 
         public DbTableRepository(AdoContext context)
         {
             _context = context;
+            _dbColumnRepository = new DbColumnRepository(_context);
         }
 
         public void Add(SDDataTable table)
@@ -33,6 +35,12 @@ namespace EFTest.Repository
                 command.Parameters.AddWithValue("@synchronize", table.Synchronize);
 
                 command.ExecuteNonQuery();
+
+                foreach (var column in table.Columns)
+                {
+                    column.SDDataTableId = table.Id;
+                    _dbColumnRepository.Add(column);
+                }
             }
         }
 
