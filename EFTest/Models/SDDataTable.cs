@@ -9,6 +9,26 @@ namespace EFTest.Models
 {
     class SDDataTable
     {
+        public SDDataTable()
+        {
+
+        }
+
+        public SDDataTable(string name, bool synchronize, ICollection<SDColumn> columns)
+        {
+            Name = name;
+            Synchronize = synchronize;
+            Columns = columns;
+        }
+
+        public SDDataTable(string id, string name, bool synchronize, ICollection<SDColumn> columns)
+        {
+            Id = id;
+            Name = name;
+            Synchronize = synchronize;
+            Columns = columns;
+        }
+
         [Key]
         public string Id { get; set; }
         public string Name { get; set; }

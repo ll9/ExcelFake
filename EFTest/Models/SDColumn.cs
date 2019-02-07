@@ -10,6 +10,35 @@ namespace EFTest.Models
 {
     class SDColumn
     {
+        public SDColumn()
+        {
+
+        }
+
+        public SDColumn(string name, string dataType, bool synchronize)
+        {
+            Name = name;
+            DataType = dataType;
+            Synchronize = synchronize;
+        }
+
+        public SDColumn(string name, string dataType, bool synchronize, string sDDataTableId)
+        {
+            Name = name;
+            DataType = dataType;
+            Synchronize = synchronize;
+            SDDataTableId = sDDataTableId;
+        }
+
+        public SDColumn(string id, string name, string dataType, bool synchronize, string sDDataTableId)
+        {
+            Id = id;
+            Name = name;
+            DataType = dataType;
+            Synchronize = synchronize;
+            SDDataTableId = sDDataTableId;
+        }
+
         [Key]
         public string Id { get; set; }
         public string Name { get; set; }
