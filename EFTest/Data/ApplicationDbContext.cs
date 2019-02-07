@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,11 +11,13 @@ namespace EFTest.Data
 {
     class ApplicationDbContext: DbContext
     {
+
         public DbSet<SDDataTable> SDDataTables { get; set; }
         public DbSet<SDColumn> Columns { get; set; }
         public DbSet<SDComboboxColumn> ComboboxColumns { get; set; }
         public DbSet<SDTextBoxColumn> TextBoxColumns { get; set; }
         public DbSet<SDProject> Projects { get; set; }
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
