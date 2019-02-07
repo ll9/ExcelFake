@@ -13,12 +13,10 @@ namespace EFTest.Repository
     {
         private const string TableName = nameof(SDDataTable);
         private readonly AdoContext _context;
-        private readonly DbColumnRepository _dbColumnRepository;
 
         public DbTableRepository(AdoContext context)
         {
             _context = context;
-            _dbColumnRepository = new DbColumnRepository(_context);
         }
 
         public void Add(SDDataTable table)

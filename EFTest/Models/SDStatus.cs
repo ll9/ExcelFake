@@ -6,8 +6,13 @@ using System.Threading.Tasks;
 
 namespace EFTest.Models
 {
-    class Status
+    class SDStatus
     {
+        public SDStatus(string id)
+        {
+            Id = id;
+        }
+
         public string Id { get; set; }
     }
 }

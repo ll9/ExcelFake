@@ -17,6 +17,7 @@ namespace EFTest.Data
         public DbSet<SDComboboxColumn> SDComboboxColumns { get; set; }
         public DbSet<SDTextBoxColumn> SDTextBoxColumns { get; set; }
         public DbSet<SDProject> SDProjects { get; set; }
+        public DbSet<SDStatus> SDStatuses { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
