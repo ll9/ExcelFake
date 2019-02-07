@@ -23,37 +23,39 @@ namespace EFTest.Repository
 
         public void Add(SDDataTable table)
         {
-            table.Id = Guid.NewGuid().ToString();
+            var columnDefinitions = table.Columns
+                .Select(c => $"{c.Name} {c.GetSqlType()}")
+                .Aggregate((current, next) => $"{current}, {next}");
 
-            var query = $"INSERT INTO {TableName}(id, name, synchronize) VALUES (@id, @name, @synchronize)";
+            var query = $"CREATE TABLE {TableName}({columnDefinitions})";
+
 
             using (var connection = _context.GetConnection())
             using (var command = new SQLiteCommand(query, connection))
             {
-                command.Parameters.AddWithValue("@id", table.Id);
-                command.Parameters.AddWithValue("@name", table.Name);
-                command.Parameters.AddWithValue("@synchronize", table.Synchronize);
-
                 command.ExecuteNonQuery();
+            }
+        }
 
-                foreach (var column in table.Columns)
-                {
-                    column.SDDataTableId = table.Id;
-                    _dbColumnRepository.Add(column);
-                }
+        public void AddColumn(SDColumn column)
+        {
+            var query = $"ALTER TABLE {TableName} ADD COLUMN {column.Name} {column.GetSqlType()}";
+
+            using (var connection = _context.GetConnection())
+            using (var command = new SQLiteCommand(query, connection))
+            {
+                command.ExecuteNonQuery();
             }
         }
 
         public void Remove(SDDataTable table)
         {
 
-            var query = $"DELETE FROM {TableName} WHERE id=@id";
+            var query = $"DROP TABLE {table.Name}";
 
             using (var connection = _context.GetConnection())
             using (var command = new SQLiteCommand(query, connection))
             {
-                command.Parameters.AddWithValue("@id", table.Id);
-
                 command.ExecuteNonQuery();
             }
         }

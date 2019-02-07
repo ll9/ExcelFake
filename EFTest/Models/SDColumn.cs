@@ -47,5 +47,33 @@ namespace EFTest.Models
 
         [ForeignKey(nameof(SDDataTable))]
         public string SDDataTableId { get; set; }
+
+        public string GetSqlType()
+        {
+            return Type.GetType(DataType).GetSqlType();
+        }
+    }
+
+    public static class TypeExtension
+    {
+        public static string GetSqlType(this Type type)
+        {
+            if (type == typeof(int))
+            {
+                return "INTEGER";
+            }
+            else if (type == typeof(bool))
+            {
+                return "BOOLEAN";
+            }
+            else if (type == typeof(DateTime))
+            {
+                return "DATETIME";
+            }
+            else
+            {
+                return "TEXT";
+            }
+        }
     }
 }

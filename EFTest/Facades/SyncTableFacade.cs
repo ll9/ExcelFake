@@ -21,7 +21,6 @@ namespace EFTest.Facades
 
             var context = new ApplicationDbContext();
             var adoContext = new AdoContext();
-            var dbColumnRepository = new DbColumnRepository(adoContext);
             var dbTableRepository = new DbTableRepository(adoContext);
 
             dbTableRepository.Add(table);
