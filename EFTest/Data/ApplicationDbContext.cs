@@ -22,6 +22,8 @@ namespace EFTest.Data
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlite("Data Source=db.sqlite");
+
+            var x = new ApplicationDbContext();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
