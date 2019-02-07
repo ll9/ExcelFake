@@ -13,7 +13,7 @@ namespace EFTest.Models
         [Key]
         public string Id { get; set; }
         public string Name { get; set; }
-        public Type DataType { get; set; }
+        public string DataType { get; set; }
         public bool Synchronize { get; set; }
 
         [ForeignKey(nameof(SDDataTable))]
