@@ -36,7 +36,7 @@ namespace EFTest.Migrations
 
                     b.HasIndex("SDDataTableId");
 
-                    b.ToTable("Columns");
+                    b.ToTable("SDColumns");
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("SDColumn");
                 });
@@ -64,7 +64,7 @@ namespace EFTest.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Projects");
+                    b.ToTable("SDProjects");
                 });
 
             modelBuilder.Entity("EFTest.Models.SDComboboxColumn", b =>

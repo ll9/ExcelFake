@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EFTest.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190207194358_Initial")]
+    [Migration("20190207202607_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -38,7 +38,7 @@ namespace EFTest.Migrations
 
                     b.HasIndex("SDDataTableId");
 
-                    b.ToTable("Columns");
+                    b.ToTable("SDColumns");
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("SDColumn");
                 });
@@ -66,7 +66,7 @@ namespace EFTest.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Projects");
+                    b.ToTable("SDProjects");
                 });
 
             modelBuilder.Entity("EFTest.Models.SDComboboxColumn", b =>

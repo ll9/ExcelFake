@@ -7,17 +7,6 @@ namespace EFTest.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Projects",
-                columns: table => new
-                {
-                    Id = table.Column<string>(nullable: false, defaultValueSql: "HEX(RANDOMBLOB(16))")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Projects", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "SDDataTables",
                 columns: table => new
                 {
@@ -31,7 +20,18 @@ namespace EFTest.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Columns",
+                name: "SDProjects",
+                columns: table => new
+                {
+                    Id = table.Column<string>(nullable: false, defaultValueSql: "HEX(RANDOMBLOB(16))")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SDProjects", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SDColumns",
                 columns: table => new
                 {
                     Id = table.Column<string>(nullable: false, defaultValueSql: "HEX(RANDOMBLOB(16))"),
@@ -44,9 +44,9 @@ namespace EFTest.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Columns", x => x.Id);
+                    table.PrimaryKey("PK_SDColumns", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Columns_SDDataTables_SDDataTableId",
+                        name: "FK_SDColumns_SDDataTables_SDDataTableId",
                         column: x => x.SDDataTableId,
                         principalTable: "SDDataTables",
                         principalColumn: "Id",
@@ -54,18 +54,18 @@ namespace EFTest.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Columns_SDDataTableId",
-                table: "Columns",
+                name: "IX_SDColumns_SDDataTableId",
+                table: "SDColumns",
                 column: "SDDataTableId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Columns");
+                name: "SDColumns");
 
             migrationBuilder.DropTable(
-                name: "Projects");
+                name: "SDProjects");
 
             migrationBuilder.DropTable(
                 name: "SDDataTables");

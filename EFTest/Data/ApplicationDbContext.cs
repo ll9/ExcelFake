@@ -13,10 +13,10 @@ namespace EFTest.Data
     {
 
         public DbSet<SDDataTable> SDDataTables { get; set; }
-        public DbSet<SDColumn> Columns { get; set; }
-        public DbSet<SDComboboxColumn> ComboboxColumns { get; set; }
-        public DbSet<SDTextBoxColumn> TextBoxColumns { get; set; }
-        public DbSet<SDProject> Projects { get; set; }
+        public DbSet<SDColumn> SDColumns { get; set; }
+        public DbSet<SDComboboxColumn> SDComboboxColumns { get; set; }
+        public DbSet<SDTextBoxColumn> SDTextBoxColumns { get; set; }
+        public DbSet<SDProject> SDProjects { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
