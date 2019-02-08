@@ -21,6 +21,13 @@ namespace EFTest.Models
             Columns = columns;
         }
 
+        public SDDataTable(string id, string name, bool synchronize)
+        {
+            Id = id;
+            Name = name;
+            Synchronize = synchronize;
+        }
+
         public SDDataTable(string id, string name, bool synchronize, ICollection<SDColumn> columns)
         {
             Id = id;
