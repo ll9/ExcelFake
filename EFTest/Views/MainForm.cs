@@ -15,6 +15,7 @@ namespace EFTest
     public partial class MainForm : Form
     {
         private MainController _controller;
+        private string _contextMenuClickedColumnHeader;
 
         public MainForm()
         {
@@ -49,6 +50,7 @@ namespace EFTest
                 {
                     if (hitTest.RowIndex == -1)
                     {
+                        _contextMenuClickedColumnHeader = dataGrid.Columns[e.ColumnIndex].HeaderText;
                         ColumnMenuStrip.Show(dataGrid, dataGrid.PointToClient(Cursor.Position));
                     }
                 }
@@ -86,11 +88,7 @@ namespace EFTest
                     {
                         if (dataGrid.DataSource is DataTable dataTable)
                         {
-                            var dialog = new AddColumnDialog();
-                            if (dialog.ShowDialog() == DialogResult.OK)
-                            {
-                                _controller.AddColumn(dataTable, dialog.ColumnViewModel);
-                            }
+                            _controller.DropColumn(dataTable, _contextMenuClickedColumnHeader);
                         }
                     }
                 }

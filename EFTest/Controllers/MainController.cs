@@ -48,5 +48,17 @@ namespace EFTest.Controllers
 
             _dbTableRepository.UpdateDataTable(sdDataTable, dataTable);
         }
+
+        internal void DropColumn(DataTable dataTable, string columnName)
+        {
+            var sdDataTable = _efContext.SDDataTables.Single(c => c.Name == dataTable.TableName);
+            var column = _efContext.SDColumns.Single(c => c.SDDataTableId == sdDataTable.Id && c.Name == columnName);
+
+            _dbTableRepository.DropColumn(dataTable.TableName, column);
+            _efContext.SDColumns.Remove(column);
+            _efContext.SaveChanges();
+
+            dataTable.Columns.Remove(columnName);
+        }
     }
 }

@@ -10,6 +10,29 @@ using System.Threading.Tasks;
 
 namespace EFTest.Repository
 {
+    class SqlColumn
+    {
+        public SqlColumn(string name, string type, bool notNull, string @default, bool isPrimaryKey)
+        {
+            Name = name;
+            Type = type;
+            NotNull = notNull;
+            Default = @default;
+            IsPrimaryKey = isPrimaryKey;
+        }
+
+        public string Name { get; set; }
+        public string Type { get; set; }
+        public bool NotNull { get; set; }
+        public string Default { get; set; }
+        public bool IsPrimaryKey { get; set; }
+
+        public string GetSqlString()
+        {
+            return $"{Name} {Type} {(string.IsNullOrEmpty(Default) ? "" : $"DEFAULT ({Default})")} {(IsPrimaryKey ? "PRIMARAY KEY" : "")} {(NotNull ? "NOT NULL": "")}";
+        }
+    }
+
     class DbTableRepository
     {
         private const string TableName = nameof(SDDataTable);
@@ -47,9 +70,9 @@ namespace EFTest.Repository
             }
         }
 
-        public ICollection<string> GetColumns(string tableName)
+        public ICollection<SqlColumn> GetColumns(string tableName)
         {
-            var columns = new List<string>();
+            var columns = new List<SqlColumn>();
             var query = $"PRAGMA table_info('{tableName}')";
 
             using (var connection = _context.GetConnection())
@@ -58,7 +81,12 @@ namespace EFTest.Repository
             {
                 while (reader.Read())
                 {
-                    columns.Add(reader.GetString(1));
+                    columns.Add(new SqlColumn(
+                        reader.GetString(1),
+                        reader.GetString(2),
+                        reader.GetBoolean(3),
+                        reader.GetString(4),
+                        reader.GetBoolean(5)));
                 }
             }
             return columns;
@@ -72,14 +100,16 @@ namespace EFTest.Repository
 
             var createStatement = tableDefinition.Split(new[] { '(' }, 2)[0];
             var columnStatement = tableDefinition.Split(new[] { '(' }, 2)[1].TrimEnd(')');
-            var columns = columnStatement.Split('\n').Select(item => item.TrimEnd(',')).ToList();
-            var droppedColumn = columns.Single(c => c.StartsWith($"\"{column.Name}\""));
+            var columns = columnStatement.Split(',').Select(i => i.Trim(' ', '\t'))
+                .Where(i => !string.IsNullOrEmpty(i)).Select(item => item.TrimEnd('\n')).ToList();
+            var droppedColumn = columns.Single(c => c.StartsWith($"`{column.Name}`"));
             columns.Remove(droppedColumn);
             var newColumns = string.Join(",", columns);
+            string columnsWithoutDroppedColumn = string.Join(",", GetColumns(tableName).Where(c => c != column.Name));
 
             var renameQuery = $"ALTER TABLE {tableName} RENAME TO {tempTable}";
             var createQuery = $"{createStatement}({newColumns})";
-            var insertQuery = $"INSERT INTO {tableName} SELECT {string.Join(",", GetColumns(tableName))} FROM {tempTable}";
+            var insertQuery = $"INSERT INTO {tableName} SELECT {columnsWithoutDroppedColumn} FROM {tempTable}";
             var dropQuery = $"DROP TABLE {tempTable}";
 
 
