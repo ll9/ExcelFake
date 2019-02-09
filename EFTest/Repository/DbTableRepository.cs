@@ -26,7 +26,7 @@ namespace EFTest.Repository
                 .Select(c => $"{c.Name} {c.GetSqlType()}")
                 .Aggregate((current, next) => $"{current}, {next}");
 
-            var query = $"CREATE TABLE {TableName}({columnDefinitions})";
+            var query = $"CREATE TABLE {table.Name}({columnDefinitions})";
 
 
             using (var connection = _context.GetConnection())
@@ -36,9 +36,9 @@ namespace EFTest.Repository
             }
         }
 
-        public void AddColumn(SDColumn column)
+        public void AddColumn(SDDataTable sDDataTable, SDColumn column)
         {
-            var query = $"ALTER TABLE {TableName} ADD COLUMN {column.Name} {column.GetSqlType()}";
+            var query = $"ALTER TABLE {sDDataTable.Name} ADD COLUMN {column.Name} {column.GetSqlType()}";
 
             using (var connection = _context.GetConnection())
             using (var command = new SQLiteCommand(query, connection))
