@@ -25,7 +25,13 @@ namespace EFTest.Controllers
 
         internal void LoadData()
         {
-            throw new NotImplementedException();
+            var sDDataTables = _efContext.SDDataTables.ToList();
+            var dataTables = _dbTableRepository.List(sDDataTables);
+
+            foreach (var dataTable in dataTables)
+            {
+                _view.AddGrid(dataTable);
+            }
         }
     }
 }

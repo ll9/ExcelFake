@@ -2,6 +2,7 @@
 using EFTest.Models;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SQLite;
 using System.Linq;
 using System.Text;
@@ -56,6 +57,30 @@ namespace EFTest.Repository
             {
                 command.ExecuteNonQuery();
             }
+        }
+
+        public DataTable List(SDDataTable sDDataTable)
+        {
+            var query = $"SELECT * from {sDDataTable.Name}";
+
+            using (var connection = _context.GetConnection())
+            using (var adapter = new SQLiteDataAdapter(query, connection))
+            {
+                var table = new DataTable(sDDataTable.Name);
+                adapter.Fill(table);
+                return table;
+            }
+        }
+
+        public ICollection<DataTable> List(IEnumerable<SDDataTable> sDDataTables)
+        {
+            var tables = new List<DataTable>();
+
+            foreach (var sdDataTable in sDDataTables)
+            {
+                tables.Add(List(sdDataTable));
+            }
+            return tables;
         }
     }
 }
