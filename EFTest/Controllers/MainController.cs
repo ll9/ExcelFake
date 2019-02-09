@@ -1,4 +1,6 @@
-﻿using System;
+﻿using EFTest.Data;
+using EFTest.Repository;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,11 +10,17 @@ namespace EFTest.Controllers
 {
     class MainController
     {
-        private Form1 form1;
+        private MainForm _view;
+        private ApplicationDbContext _efContext;
+        private AdoContext _adoContext;
+        private DbTableRepository _dbTableRepository;
 
-        public MainController(Form1 form1)
+        public MainController(MainForm form1)
         {
-            this.form1 = form1;
+            _view = form1;
+            _efContext = new ApplicationDbContext();
+            _adoContext = new AdoContext();
+            _dbTableRepository = new DbTableRepository(_adoContext);
         }
 
         internal void LoadData()
