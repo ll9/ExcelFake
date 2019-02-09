@@ -29,7 +29,7 @@ namespace EFTest.Repository
 
         public string GetSqlString()
         {
-            return $"{Name} {Type} {(string.IsNullOrEmpty(Default) ? "" : $"DEFAULT ({Default})")} {(IsPrimaryKey ? "PRIMARAY KEY" : "")} {(NotNull ? "NOT NULL": "")}";
+            return $"{Name} {Type} {(string.IsNullOrEmpty(Default) ? "" : $"DEFAULT ({Default})")} {(IsPrimaryKey ? "PRIMARY KEY" : "")} {(NotNull ? "NOT NULL": "")}";
         }
     }
 
@@ -85,7 +85,7 @@ namespace EFTest.Repository
                         reader.GetString(1),
                         reader.GetString(2),
                         reader.GetBoolean(3),
-                        reader.GetString(4),
+                        (reader[4] == DBNull.Value ? null : reader.GetString(4)),
                         reader.GetBoolean(5)));
                 }
             }
@@ -95,21 +95,14 @@ namespace EFTest.Repository
         public void DropColumn(string tableName, SDColumn column)
         {
             var tempTable = $"_{tableName}";
-            var metaQuery = $"SELECT sql FROM sqlite_master WHERE type='table' and name='{tableName}'";
-            var tableDefinition = _context.ExecuteScalar(metaQuery).ToString();
+            var columns = GetColumns(tableName).Where(c => c.Name != column.Name);
+            var columnsString = string.Join(", ", columns.Select(c => c.GetSqlString()));
 
-            var createStatement = tableDefinition.Split(new[] { '(' }, 2)[0];
-            var columnStatement = tableDefinition.Split(new[] { '(' }, 2)[1].TrimEnd(')');
-            var columns = columnStatement.Split(',').Select(i => i.Trim(' ', '\t'))
-                .Where(i => !string.IsNullOrEmpty(i)).Select(item => item.TrimEnd('\n')).ToList();
-            var droppedColumn = columns.Single(c => c.StartsWith($"`{column.Name}`"));
-            columns.Remove(droppedColumn);
-            var newColumns = string.Join(",", columns);
-            string columnsWithoutDroppedColumn = string.Join(",", GetColumns(tableName).Where(c => c != column.Name));
+
 
             var renameQuery = $"ALTER TABLE {tableName} RENAME TO {tempTable}";
-            var createQuery = $"{createStatement}({newColumns})";
-            var insertQuery = $"INSERT INTO {tableName} SELECT {columnsWithoutDroppedColumn} FROM {tempTable}";
+            var createQuery = $"CREATE TABLE {tableName}({columnsString})";
+            var insertQuery = $"INSERT INTO {tableName} SELECT {string.Join(", ", columns.Select(c => c.Name))} FROM {tempTable}";
             var dropQuery = $"DROP TABLE {tempTable}";
 
 
