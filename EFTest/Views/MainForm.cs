@@ -57,7 +57,23 @@ namespace EFTest
 
         private void spalteEinfügenToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            new AddColumnDialog().ShowDialog();
+            if (sender is ToolStripItem menuItem)
+            {
+                if (menuItem.Owner is ContextMenuStrip owner)
+                {
+                    if (owner.SourceControl is DataGridView dataGrid)
+                    {
+                        if (dataGrid.DataSource is DataTable dataTable)
+                        {
+                            var dialog = new AddColumnDialog();
+                            if (dialog.ShowDialog() == DialogResult.OK)
+                            {
+                                _controller.AddColumn(dataTable, dialog.ColumnViewModel);
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }

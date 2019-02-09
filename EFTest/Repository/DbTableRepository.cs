@@ -36,9 +36,9 @@ namespace EFTest.Repository
             }
         }
 
-        public void AddColumn(SDDataTable sDDataTable, SDColumn column)
+        public void AddColumn(string tableName, SDColumn column)
         {
-            var query = $"ALTER TABLE {sDDataTable.Name} ADD COLUMN {column.Name} {column.GetSqlType()}";
+            var query = $"ALTER TABLE {tableName} ADD COLUMN {column.Name} {column.GetSqlType()}";
 
             using (var connection = _context.GetConnection())
             using (var command = new SQLiteCommand(query, connection))
@@ -69,6 +69,17 @@ namespace EFTest.Repository
                 var table = new DataTable(sDDataTable.Name);
                 adapter.Fill(table);
                 return table;
+            }
+        }
+
+        public void UpdateDataTable(SDDataTable sDDataTable, DataTable dataTable)
+        {
+            var query = $"SELECT * from {sDDataTable.Name}";
+
+            using (var connection = _context.GetConnection())
+            using (var adapter = new SQLiteDataAdapter(query, connection))
+            {
+                adapter.Fill(dataTable);
             }
         }
 

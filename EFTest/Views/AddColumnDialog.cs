@@ -14,7 +14,7 @@ namespace EFTest.Views
 {
     public partial class AddColumnDialog : Form
     {
-        readonly ColumnViewModel ColumnViewModel = new ColumnViewModel { DataType = "Text" };
+        internal readonly ColumnViewModel ColumnViewModel = new ColumnViewModel { DataType = "Text" };
 
         private class DisplayValue<T>
         {
@@ -31,6 +31,7 @@ namespace EFTest.Views
         public AddColumnDialog()
         {
             InitializeComponent();
+            dataTypeComboBox.DataBindings.Add(nameof(dataTypeComboBox.SelectedValue), sDColumnBindingSource, nameof(SDColumn.DataType));
 
             dataTypeComboBox.DataSource = new List<DisplayValue<string>>
             {

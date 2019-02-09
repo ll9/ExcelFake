@@ -41,7 +41,7 @@
             this.GridTabControl.Location = new System.Drawing.Point(12, 12);
             this.GridTabControl.Name = "GridTabControl";
             this.GridTabControl.SelectedIndex = 0;
-            this.GridTabControl.Size = new System.Drawing.Size(505, 270);
+            this.GridTabControl.Size = new System.Drawing.Size(743, 297);
             this.GridTabControl.TabIndex = 0;
             // 
             // ColumnMenuStrip
@@ -50,26 +50,26 @@
             this.spalteEinfügenToolStripMenuItem,
             this.spalteLöschenToolStripMenuItem});
             this.ColumnMenuStrip.Name = "ColumnMenuStrip";
-            this.ColumnMenuStrip.Size = new System.Drawing.Size(181, 70);
+            this.ColumnMenuStrip.Size = new System.Drawing.Size(157, 48);
             // 
             // spalteEinfügenToolStripMenuItem
             // 
             this.spalteEinfügenToolStripMenuItem.Name = "spalteEinfügenToolStripMenuItem";
-            this.spalteEinfügenToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.spalteEinfügenToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
             this.spalteEinfügenToolStripMenuItem.Text = "Spalte einfügen";
             this.spalteEinfügenToolStripMenuItem.Click += new System.EventHandler(this.spalteEinfügenToolStripMenuItem_Click);
             // 
             // spalteLöschenToolStripMenuItem
             // 
             this.spalteLöschenToolStripMenuItem.Name = "spalteLöschenToolStripMenuItem";
-            this.spalteLöschenToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.spalteLöschenToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
             this.spalteLöschenToolStripMenuItem.Text = "Spalte löschen";
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1043, 439);
             this.Controls.Add(this.GridTabControl);
             this.Name = "MainForm";
             this.Text = "Form1";

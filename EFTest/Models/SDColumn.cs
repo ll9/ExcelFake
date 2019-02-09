@@ -62,6 +62,10 @@ namespace EFTest.Models
             {
                 return "INTEGER";
             }
+            else if (type == typeof(double))
+            {
+                return "DOUBLE";
+            }
             else if (type == typeof(bool))
             {
                 return "BOOLEAN";

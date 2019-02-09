@@ -32,10 +32,10 @@
             System.Windows.Forms.Label dataTypeLabel;
             System.Windows.Forms.Label nameLabel;
             this.dataTypeComboBox = new System.Windows.Forms.ComboBox();
+            this.sDColumnBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.nameTextBox = new System.Windows.Forms.TextBox();
             this.OKButton = new System.Windows.Forms.Button();
             this.CancelButton = new System.Windows.Forms.Button();
-            this.sDColumnBindingSource = new System.Windows.Forms.BindingSource(this.components);
             dataTypeLabel = new System.Windows.Forms.Label();
             nameLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.sDColumnBindingSource)).BeginInit();
@@ -61,13 +61,16 @@
             // 
             // dataTypeComboBox
             // 
-            this.dataTypeComboBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.sDColumnBindingSource, "DataType", true));
             this.dataTypeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.dataTypeComboBox.FormattingEnabled = true;
             this.dataTypeComboBox.Location = new System.Drawing.Point(78, 6);
             this.dataTypeComboBox.Name = "dataTypeComboBox";
             this.dataTypeComboBox.Size = new System.Drawing.Size(121, 21);
             this.dataTypeComboBox.TabIndex = 2;
+            // 
+            // sDColumnBindingSource
+            // 
+            this.sDColumnBindingSource.DataSource = typeof(EFTest.ViewModels.ColumnViewModel);
             // 
             // nameTextBox
             // 
@@ -98,10 +101,6 @@
             this.CancelButton.UseVisualStyleBackColor = true;
             this.CancelButton.Click += new System.EventHandler(this.CancelButton_Click);
             // 
-            // sDColumnBindingSource
-            // 
-            this.sDColumnBindingSource.DataSource = typeof(EFTest.ViewModels.ColumnViewModel);
-            // 
             // AddColumnDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -127,6 +126,6 @@
         private System.Windows.Forms.ComboBox dataTypeComboBox;
         private System.Windows.Forms.TextBox nameTextBox;
         private System.Windows.Forms.Button OKButton;
-        private System.Windows.Forms.Button CancelButton;
+        private new System.Windows.Forms.Button CancelButton;
     }
 }

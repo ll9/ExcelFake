@@ -1,7 +1,10 @@
 ﻿using EFTest.Data;
+using EFTest.Models;
 using EFTest.Repository;
+using EFTest.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,6 +35,18 @@ namespace EFTest.Controllers
             {
                 _view.AddGrid(dataTable);
             }
+        }
+
+        internal void AddColumn(DataTable dataTable, ColumnViewModel columnViewModel)
+        {
+            var sdDataTable = _efContext.SDDataTables.Single(c => c.Name == dataTable.TableName);
+            var column = new SDTextBoxColumn(Guid.NewGuid().ToString(), columnViewModel.Name, columnViewModel.DataType, true, sdDataTable.Id);
+
+            _dbTableRepository.AddColumn(dataTable.TableName, column);
+            _efContext.SDColumns.Add(column);
+            _efContext.SaveChanges();
+
+            _dbTableRepository.UpdateDataTable(sdDataTable, dataTable);
         }
     }
 }
