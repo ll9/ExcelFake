@@ -31,9 +31,32 @@ namespace EFTest
                 Dock = DockStyle.Fill,
                 DataSource = dataTable
             };
+            dataGrid.ColumnHeaderMouseClick += DataGrid_ColumnHeaderMouseClick;
 
             tab.Controls.Add(dataGrid);
             GridTabControl.TabPages.Add(tab);
+        }
+
+        private void DataGrid_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            if (sender is DataGridView dataGrid)
+            {
+
+                var hitTest = dataGrid.HitTest(e.X, e.Y);
+
+                if (e.Button == MouseButtons.Right)
+                {
+                    if (hitTest.RowIndex == -1)
+                    {
+                        ColumnMenuStrip.Show(dataGrid, dataGrid.PointToClient(Cursor.Position));
+                    }
+                }
+            }
+        }
+
+        private void spalteEinfügenToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Should open add Column Dialog");
         }
     }
 }

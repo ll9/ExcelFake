@@ -28,7 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.GridTabControl = new System.Windows.Forms.TabControl();
+            this.ColumnMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.spalteEinfügenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.spalteLöschenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ColumnMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // GridTabControl
@@ -39,6 +44,27 @@
             this.GridTabControl.Size = new System.Drawing.Size(505, 270);
             this.GridTabControl.TabIndex = 0;
             // 
+            // ColumnMenuStrip
+            // 
+            this.ColumnMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.spalteEinfügenToolStripMenuItem,
+            this.spalteLöschenToolStripMenuItem});
+            this.ColumnMenuStrip.Name = "ColumnMenuStrip";
+            this.ColumnMenuStrip.Size = new System.Drawing.Size(181, 70);
+            // 
+            // spalteEinfügenToolStripMenuItem
+            // 
+            this.spalteEinfügenToolStripMenuItem.Name = "spalteEinfügenToolStripMenuItem";
+            this.spalteEinfügenToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.spalteEinfügenToolStripMenuItem.Text = "Spalte einfügen";
+            this.spalteEinfügenToolStripMenuItem.Click += new System.EventHandler(this.spalteEinfügenToolStripMenuItem_Click);
+            // 
+            // spalteLöschenToolStripMenuItem
+            // 
+            this.spalteLöschenToolStripMenuItem.Name = "spalteLöschenToolStripMenuItem";
+            this.spalteLöschenToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.spalteLöschenToolStripMenuItem.Text = "Spalte löschen";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -47,6 +73,7 @@
             this.Controls.Add(this.GridTabControl);
             this.Name = "MainForm";
             this.Text = "Form1";
+            this.ColumnMenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -54,6 +81,9 @@
         #endregion
 
         private System.Windows.Forms.TabControl GridTabControl;
+        private System.Windows.Forms.ContextMenuStrip ColumnMenuStrip;
+        private System.Windows.Forms.ToolStripMenuItem spalteEinfügenToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem spalteLöschenToolStripMenuItem;
     }
 }
 
