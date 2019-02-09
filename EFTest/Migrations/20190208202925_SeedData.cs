@@ -41,6 +41,8 @@ namespace EFTest.Migrations
                 table: "SDColumns",
                 columns: new[] { "Id", "DataType", "Discriminator", "Name", "SDDataTableId", "Synchronize" },
                 values: new object[] { "aab94d61-e949-4b81-b836-7a86a1aea192", "System.DateTime", "SDColumn", "dateTimeCol", "3aad8202-defd-444e-a11a-564beaef779b", true });
+
+            migrationBuilder.Sql("CREATE TABLE testtable(Id TEXT DEFAULT (HEX(RANDOMBLOB(16))) PRIMARY KEY, stringCol TEXT, intCol INTEGER, dateTimeCol DATETIME)");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -72,6 +74,8 @@ namespace EFTest.Migrations
                 table: "SDDataTables",
                 keyColumn: "Id",
                 keyValue: "3aad8202-defd-444e-a11a-564beaef779b");
+
+            migrationBuilder.Sql("DROP TABLE testtable");
         }
     }
 }

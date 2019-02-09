@@ -36,16 +36,16 @@
             this.GridTabControl.Location = new System.Drawing.Point(12, 12);
             this.GridTabControl.Name = "GridTabControl";
             this.GridTabControl.SelectedIndex = 0;
-            this.GridTabControl.Size = new System.Drawing.Size(200, 100);
+            this.GridTabControl.Size = new System.Drawing.Size(505, 270);
             this.GridTabControl.TabIndex = 0;
             // 
-            // Form1
+            // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.GridTabControl);
-            this.Name = "Form1";
+            this.Name = "MainForm";
             this.Text = "Form1";
             this.ResumeLayout(false);
 
