@@ -47,6 +47,48 @@ namespace EFTest.Repository
             }
         }
 
+        public ICollection<string> GetColumns(string tableName)
+        {
+            var columns = new List<string>();
+            var query = $"PRAGMA table_info('{tableName}')";
+
+            using (var connection = _context.GetConnection())
+            using (var command = new SQLiteCommand(query, connection))
+            using (var reader = command.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    columns.Add(reader.GetString(1));
+                }
+            }
+            return columns;
+        }
+
+        public void DropColumn(string tableName, SDColumn column)
+        {
+            var tempTable = $"_{tableName}";
+            var metaQuery = $"SELECT sql FROM sqlite_master WHERE type='table' and name='{tableName}'";
+            var tableDefinition = _context.ExecuteScalar(metaQuery).ToString();
+
+            var createStatement = tableDefinition.Split(new[] { '(' }, 2)[0];
+            var columnStatement = tableDefinition.Split(new[] { '(' }, 2)[1].TrimEnd(')');
+            var columns = columnStatement.Split('\n').Select(item => item.TrimEnd(',')).ToList();
+            var droppedColumn = columns.Single(c => c.StartsWith($"\"{column.Name}\""));
+            columns.Remove(droppedColumn);
+            var newColumns = string.Join(",", columns);
+
+            var renameQuery = $"ALTER TABLE {tableName} RENAME TO {tempTable}";
+            var createQuery = $"{createStatement}({newColumns})";
+            var insertQuery = $"INSERT INTO {tableName} SELECT {string.Join(",", GetColumns(tableName))} FROM {tempTable}";
+            var dropQuery = $"DROP TABLE {tempTable}";
+
+
+            _context.ExecuteQuery(renameQuery);
+            _context.ExecuteQuery(createQuery);
+            _context.ExecuteQuery(insertQuery);
+            _context.ExecuteQuery(dropQuery);
+        }
+
         public void Remove(SDDataTable table)
         {
 

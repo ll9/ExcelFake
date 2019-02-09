@@ -50,20 +50,21 @@
             this.spalteEinfügenToolStripMenuItem,
             this.spalteLöschenToolStripMenuItem});
             this.ColumnMenuStrip.Name = "ColumnMenuStrip";
-            this.ColumnMenuStrip.Size = new System.Drawing.Size(157, 48);
+            this.ColumnMenuStrip.Size = new System.Drawing.Size(181, 70);
             // 
             // spalteEinfügenToolStripMenuItem
             // 
             this.spalteEinfügenToolStripMenuItem.Name = "spalteEinfügenToolStripMenuItem";
-            this.spalteEinfügenToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+            this.spalteEinfügenToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.spalteEinfügenToolStripMenuItem.Text = "Spalte einfügen";
             this.spalteEinfügenToolStripMenuItem.Click += new System.EventHandler(this.spalteEinfügenToolStripMenuItem_Click);
             // 
             // spalteLöschenToolStripMenuItem
             // 
             this.spalteLöschenToolStripMenuItem.Name = "spalteLöschenToolStripMenuItem";
-            this.spalteLöschenToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+            this.spalteLöschenToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.spalteLöschenToolStripMenuItem.Text = "Spalte löschen";
+            this.spalteLöschenToolStripMenuItem.Click += new System.EventHandler(this.spalteLöschenToolStripMenuItem_Click);
             // 
             // MainForm
             // 

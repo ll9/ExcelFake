@@ -29,5 +29,14 @@ namespace EFTest.Data
                 command.ExecuteNonQuery();
             }
         }
+
+        public object ExecuteScalar(string query)
+        {
+            using (var connection = GetConnection())
+            using (var command = new SQLiteCommand(query, connection))
+            {
+                return command.ExecuteScalar();
+            }
+        }
     }
 }
