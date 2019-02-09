@@ -33,9 +33,9 @@
             System.Windows.Forms.Label nameLabel;
             this.dataTypeComboBox = new System.Windows.Forms.ComboBox();
             this.nameTextBox = new System.Windows.Forms.TextBox();
-            this.sDColumnBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.OKButton = new System.Windows.Forms.Button();
             this.CancelButton = new System.Windows.Forms.Button();
+            this.sDColumnBindingSource = new System.Windows.Forms.BindingSource(this.components);
             dataTypeLabel = new System.Windows.Forms.Label();
             nameLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.sDColumnBindingSource)).BeginInit();
@@ -50,6 +50,15 @@
             dataTypeLabel.TabIndex = 1;
             dataTypeLabel.Text = "Data Type:";
             // 
+            // nameLabel
+            // 
+            nameLabel.AutoSize = true;
+            nameLabel.Location = new System.Drawing.Point(12, 36);
+            nameLabel.Name = "nameLabel";
+            nameLabel.Size = new System.Drawing.Size(38, 13);
+            nameLabel.TabIndex = 3;
+            nameLabel.Text = "Name:";
+            // 
             // dataTypeComboBox
             // 
             this.dataTypeComboBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.sDColumnBindingSource, "DataType", true));
@@ -60,35 +69,24 @@
             this.dataTypeComboBox.Size = new System.Drawing.Size(121, 21);
             this.dataTypeComboBox.TabIndex = 2;
             // 
-            // nameLabel
-            // 
-            nameLabel.AutoSize = true;
-            nameLabel.Location = new System.Drawing.Point(12, 36);
-            nameLabel.Name = "nameLabel";
-            nameLabel.Size = new System.Drawing.Size(38, 13);
-            nameLabel.TabIndex = 3;
-            nameLabel.Text = "Name:";
-            // 
             // nameTextBox
             // 
-            this.nameTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.sDColumnBindingSource, "Name", true));
+            this.nameTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.sDColumnBindingSource, "Name", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.nameTextBox.Location = new System.Drawing.Point(78, 33);
             this.nameTextBox.Name = "nameTextBox";
             this.nameTextBox.Size = new System.Drawing.Size(121, 20);
             this.nameTextBox.TabIndex = 4;
             // 
-            // sDColumnBindingSource
-            // 
-            this.sDColumnBindingSource.DataSource = typeof(EFTest.Models.SDColumn);
-            // 
             // OKButton
             // 
+            this.OKButton.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.sDColumnBindingSource, "IsValid", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.OKButton.Location = new System.Drawing.Point(78, 76);
             this.OKButton.Name = "OKButton";
             this.OKButton.Size = new System.Drawing.Size(40, 23);
             this.OKButton.TabIndex = 5;
             this.OKButton.Text = "OK";
             this.OKButton.UseVisualStyleBackColor = true;
+            this.OKButton.Click += new System.EventHandler(this.OKButton_Click);
             // 
             // CancelButton
             // 
@@ -98,6 +96,11 @@
             this.CancelButton.TabIndex = 6;
             this.CancelButton.Text = "Abbrechen";
             this.CancelButton.UseVisualStyleBackColor = true;
+            this.CancelButton.Click += new System.EventHandler(this.CancelButton_Click);
+            // 
+            // sDColumnBindingSource
+            // 
+            this.sDColumnBindingSource.DataSource = typeof(EFTest.ViewModels.ColumnViewModel);
             // 
             // AddColumnDialog
             // 

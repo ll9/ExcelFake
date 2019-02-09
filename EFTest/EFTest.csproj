@@ -178,6 +178,13 @@
     <Compile Include="Migrations\20190208202925_SeedData.designer.cs">
       <DependentUpon>20190208202925_SeedData.cs</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\ColumnViewModel.cs" />
+    <Compile Include="Views\AddColumnDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\AddColumnDialog.Designer.cs">
+      <DependentUpon>AddColumnDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -207,6 +214,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Views\AddColumnDialog.resx">
+      <DependentUpon>AddColumnDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -214,6 +224,14 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\EFTest.Models.SDColumn.datasource" />
+    <None Include="Properties\DataSources\EFTest.Models.SDComboboxColumn.datasource" />
+    <None Include="Properties\DataSources\EFTest.Models.SDDataTable.datasource" />
+    <None Include="Properties\DataSources\EFTest.Models.SDProject.datasource" />
+    <None Include="Properties\DataSources\EFTest.Models.SDStatus.datasource" />
+    <None Include="Properties\DataSources\EFTest.Models.SDTextBoxColumn.datasource" />
+    <None Include="Properties\DataSources\EFTest.Models.TypeExtension.datasource" />
+    <None Include="Properties\DataSources\EFTest.ViewModels.ColumnViewModel.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

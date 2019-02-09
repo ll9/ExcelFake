@@ -1,4 +1,5 @@
 ﻿using EFTest.Controllers;
+using EFTest.Views;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -56,7 +57,7 @@ namespace EFTest
 
         private void spalteEinfügenToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Should open add Column Dialog");
+            new AddColumnDialog().ShowDialog();
         }
     }
 }

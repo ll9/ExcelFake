@@ -1,4 +1,5 @@
 ﻿using EFTest.Models;
+using EFTest.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,6 +14,8 @@ namespace EFTest.Views
 {
     public partial class AddColumnDialog : Form
     {
+        readonly ColumnViewModel ColumnViewModel = new ColumnViewModel { DataType = "Text" };
+
         private class DisplayValue<T>
         {
             public DisplayValue(string display, T value)
@@ -38,7 +41,19 @@ namespace EFTest.Views
             dataTypeComboBox.DisplayMember = nameof(DisplayValue<object>.Display);
             dataTypeComboBox.ValueMember = nameof(DisplayValue<object>.Value);
 
-            sDColumnBindingSource.DataSource = new SDTextBoxColumn();
+            sDColumnBindingSource.DataSource = ColumnViewModel;
+        }
+
+        private void OKButton_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.OK;
+            Close();
+        }
+
+        private void CancelButton_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.Cancel;
+            Close();
         }
     }
 }
