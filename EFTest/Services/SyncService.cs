@@ -1,5 +1,6 @@
 ﻿using EFTest.Controllers;
 using EFTest.Data;
+using EFTest.Extensions;
 using EFTest.Models;
 using EFTest.Repository;
 using Microsoft.EntityFrameworkCore;
@@ -80,7 +81,8 @@ namespace EFTest.Services
             foreach (var table in newTables)
             {
                 _dbTableRepository.TryAdd(table);
-                _efContext.SDDataTables.Add(table);
+                //TODO: broken
+                //_efContext.SDDataTables.AddOrUpdate(table);
                 _efContext.SDStatuses.Add(new SDStatus(table.Id));
                 _efContext.SDStatuses.AddRange(table.Columns.Select(c => new SDStatus(c.Id)));
             }
@@ -88,7 +90,7 @@ namespace EFTest.Services
             {
                 var tableName = _efContext.SDDataTables.Single(t => t.Id == column.SDDataTableId).Name;
                 _dbTableRepository.TryAddColumn(tableName, column);
-                _efContext.SDColumns.Add(column);
+                _efContext.SDColumns.Upsert(column);
                 _efContext.SDStatuses.Add(new SDStatus(column.Id));
             }
             _efContext.SaveChanges();
@@ -98,13 +100,15 @@ namespace EFTest.Services
         {
             var removedTables = _efContext.SDStatuses
                 .Where(s => !data.SDDataTables.Any(t => t.Id == s.Id))
-                .Select(s => _efContext.SDDataTables.Single(t => t.Id == s.Id))
+                .Select(s => _efContext.SDDataTables.SingleOrDefault(t => t.Id == s.Id))
                 .ToList();
+            removedTables.RemoveAll(i => i == null);
 
             var removedColumns = data.SDColumns
                 .Where(s => !data.SDColumns.Any(c => c.Id == s.Id))
-                .Select(s => _efContext.SDColumns.Single(c => c.Id == s.Id))
+                .Select(s => _efContext.SDColumns.SingleOrDefault(c => c.Id == s.Id))
                 .ToList();
+            removedColumns.RemoveAll(i => i == null);
 
             foreach (var table in removedTables)
             {
