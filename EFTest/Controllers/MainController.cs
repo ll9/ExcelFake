@@ -4,10 +4,12 @@ using EFTest.Repository;
 using EFTest.ViewModels;
 using System;
 using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using EFTest.Services;
 
 namespace EFTest.Controllers
 {
@@ -17,6 +19,7 @@ namespace EFTest.Controllers
         private ApplicationDbContext _efContext;
         private AdoContext _adoContext;
         private DbTableRepository _dbTableRepository;
+        private SyncService _syncService;
 
         public MainController(MainForm form1)
         {
@@ -24,6 +27,7 @@ namespace EFTest.Controllers
             _efContext = new ApplicationDbContext();
             _adoContext = new AdoContext();
             _dbTableRepository = new DbTableRepository(_adoContext);
+            _syncService = new SyncService(this, _efContext);
         }
 
         internal void LoadData()
@@ -59,6 +63,11 @@ namespace EFTest.Controllers
             _efContext.SaveChanges();
 
             dataTable.Columns.Remove(columnName);
+        }
+
+        internal void SyncSchema()
+        {
+            _syncService.Synchronize();
         }
     }
 }
