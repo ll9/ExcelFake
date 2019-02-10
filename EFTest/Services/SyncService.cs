@@ -2,6 +2,7 @@
 using EFTest.Data;
 using EFTest.Models;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using RestSharp;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,8 @@ namespace EFTest.Services
 {
     class SyncService
     {
-        private const string BaseUrl = "http://example.com";
+        private const string BaseUrl = "https://localhost:44331";
+        private const string ApiUrl = "api/SDSchemaObject";
         private readonly MainController _controller;
         private readonly ApplicationDbContext _efContext;
         private RestClient _client;
@@ -34,21 +36,24 @@ namespace EFTest.Services
 
         public async Task DownloadChanges()
         {
-            var request = new RestRequest("api/sync-schema", Method.GET);
+            var request = new RestRequest(ApiUrl, Method.GET);
             request.AddHeader("Authorization", "Bearer token");
+            request.AddHeader("Content-Type", "application/json");
+            request.AddHeader("Accept", "application/json");
 
-            //var response = _client.Execute<SDSchemaObject>(request);
-            //if (response.StatusCode == System.Net.HttpStatusCode.OK)
-            //{
-            //    Console.WriteLine("OK");
-            //}
-            //else
-            //{
-            //    throw new Exception("Network error");
-            //}
+            var response = _client.Execute<SDSchemaObject>(request);
+            var sDSchema = JsonConvert.DeserializeObject<SDSchemaObject>(response.Content);
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                Console.WriteLine("OK");
+            }
+            else
+            {
+                throw new Exception("Network error");
+            }
 
-            //CopyNewReomteEntriesToLocal(response.Data);
-            //RemoveDeletedRemoteEntriesToLocal(response.Data);
+            CopyNewReomteEntriesToLocal(sDSchema);
+            RemoveDeletedRemoteEntriesToLocal(sDSchema);
         }
 
         public async Task UploadChanges()
@@ -62,17 +67,19 @@ namespace EFTest.Services
             var newTables = data.SDDataTables
                 .Where(remote => _efContext.SDStatuses.Any(local => local.Id == remote.Id));
 
-            var newColumns = data.SDColumns
+            var newColumns = data.SDDataTables
+                .Except(newTables)
+                .SelectMany(t => t.Columns)
                 .Where(remote => _efContext.SDStatuses.Any(local => local.Id == remote.Id));
 
-            //foreach (var table in newTables)
-            //{
-            //    _controller.AddTable(table);
-            //}
-            //foreach (var column in newColumns)
-            //{
-            //    _controller.AddColumn(column);
-            //}
+            foreach (var table in newTables)
+            {
+                //_controller.AddTable(table);
+            }
+            foreach (var column in newColumns)
+            {
+                //_controller.AddColumn(column);
+            }
         }
 
         private void RemoveDeletedRemoteEntriesToLocal(SDSchemaObject data)
@@ -86,14 +93,14 @@ namespace EFTest.Services
                 .Where(s => !data.SDColumns.Any(c => c.Id == s.Id))
                 .ToList();
 
-            //foreach (var table in newTables)
-            //{
-            //    _controller.RemoveTable(table);
-            //}
-            //foreach (var column in newColumns)
-            //{
-            //    _controller.RemoveColumn(column);
-            //}
+            foreach (var table in removedTables)
+            {
+                //_controller.RemoveTable(table);
+            }
+            foreach (var column in removedColumns)
+            {
+                //_controller.RemoveColumn(column);
+            }
         }
 
         public async Task CopyNewLocalEntriesToRemote()
@@ -111,63 +118,63 @@ namespace EFTest.Services
             var schemaObject = new SDSchemaObject(newTables, newColumns);
 
 
-            var request = new RestRequest("api/sync-schema", Method.POST);
+            var request = new RestRequest(ApiUrl, Method.POST);
             request.AddHeader("Authorization", "Bearer token");
             request.AddJsonBody(schemaObject);
 
-            //var response = _client.Execute(request);
-            //if (response.StatusCode == System.Net.HttpStatusCode.Created)
-            //{
-            //    Console.WriteLine("OK");
-            //}
-            //else
-            //{
-            //    throw new Exception("Network error");
-            //}
+            var response = _client.Execute(request);
+            if (response.StatusCode == System.Net.HttpStatusCode.Created)
+            {
+                Console.WriteLine("OK");
+            }
+            else
+            {
+                throw new Exception("Network error");
+            }
 
 
-            //foreach (var table in schemaObject.SDDataTables)
-            //{
-            //    _efContext.SDStatuses.Add(new SDStatus(table.Id));
-            //    foreach (var column in table.Columns)
-            //    {
-            //        _efContext.SDStatuses.Add(new SDStatus(column.Id));
-            //    }
-            //}
-            //foreach (var column in schemaObject.SDColumns)
-            //{
-            //    _efContext.SDStatuses.Add(new SDStatus(column.Id));
-            //}
-            //_efContext.SaveChanges();
+            foreach (var table in schemaObject.SDDataTables)
+            {
+                _efContext.SDStatuses.Add(new SDStatus(table.Id));
+                foreach (var column in table.Columns)
+                {
+                    _efContext.SDStatuses.Add(new SDStatus(column.Id));
+                }
+            }
+            foreach (var column in schemaObject.SDColumns)
+            {
+                _efContext.SDStatuses.Add(new SDStatus(column.Id));
+            }
+            _efContext.SaveChanges();
         }
 
         public async Task RemoveDeletedLocalEntriesToRemote()
         {
             var deletedStatuses = _efContext.SDStatuses
-                .Where(s => !_efContext.SDDataTables.Any(t => t.Id == s.Id) ||
+                .Where(s => !_efContext.SDDataTables.Any(t => t.Id == s.Id) &&
                             !_efContext.SDColumns.Any(c => c.Id == s.Id))
                 .ToList();
 
 
-            var request = new RestRequest("api/sync-schema", Method.DELETE);
+            var request = new RestRequest(ApiUrl, Method.DELETE);
             request.AddHeader("Authorization", "Bearer token");
             request.AddJsonBody(deletedStatuses.Select(s => s.Id));
 
-            //var response = _client.Execute(request);
-            //if (response.StatusCode == System.Net.HttpStatusCode.OK)
-            //{
-            //    Console.WriteLine("OK");
-            //}
-            //else
-            //{
-            //    throw new Exception("Network error");
-            //}
+            var response = _client.Execute(request);
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                Console.WriteLine("OK");
+            }
+            else
+            {
+                throw new Exception("Network error");
+            }
 
-            //foreach (var status in deletedStatuses)
-            //{
-            //    _efContext.RemoveRange(deletedStatuses);
-            //}
-            //_efContext.SaveChanges();
+            foreach (var status in deletedStatuses)
+            {
+                _efContext.RemoveRange(deletedStatuses);
+            }
+            _efContext.SaveChanges();
 
         }
     }

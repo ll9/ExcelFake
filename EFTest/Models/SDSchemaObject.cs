@@ -18,7 +18,7 @@ namespace EFTest.Models
             SDColumns = columns;
         }
 
-        public ICollection<SDDataTable> SDDataTables { get; set; }
-        public ICollection<SDColumn> SDColumns { get; set; }
+        public ICollection<SDDataTable> SDDataTables { get; set; } = new List<SDDataTable>();
+        public ICollection<SDColumn> SDColumns { get; set; } = new List<SDColumn>();
     }
 }
