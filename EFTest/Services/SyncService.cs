@@ -1,6 +1,7 @@
 ﻿using EFTest.Controllers;
 using EFTest.Data;
 using EFTest.Models;
+using EFTest.Repository;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using RestSharp;
@@ -19,13 +20,15 @@ namespace EFTest.Services
         private const string ApiUrl = "api/SDSchemaObject";
         private readonly MainController _controller;
         private readonly ApplicationDbContext _efContext;
+        private readonly DbTableRepository _dbTableRepository;
         private RestClient _client;
 
-        public SyncService(MainController controller, ApplicationDbContext efContext)
+        public SyncService(MainController controller, ApplicationDbContext efContext, DbTableRepository dbTableRepository)
         {
             _client = new RestClient(BaseUrl);
             _controller = controller;
             _efContext = efContext;
+            _dbTableRepository = dbTableRepository;
         }
 
         public async void Synchronize()
@@ -65,42 +68,59 @@ namespace EFTest.Services
         private void CopyNewReomteEntriesToLocal(SDSchemaObject data)
         {
             var newTables = data.SDDataTables
-                .Where(remote => _efContext.SDStatuses.Any(local => local.Id == remote.Id));
+                .Where(remote => !_efContext.SDStatuses.Any(local => local.Id == remote.Id))
+                .ToList();
 
             var newColumns = data.SDDataTables
                 .Except(newTables)
                 .SelectMany(t => t.Columns)
-                .Where(remote => _efContext.SDStatuses.Any(local => local.Id == remote.Id));
+                .Where(remote => !_efContext.SDStatuses.Any(local => local.Id == remote.Id))
+                .ToList();
 
             foreach (var table in newTables)
             {
-                //_controller.AddTable(table);
+                _dbTableRepository.TryAdd(table);
+                _efContext.SDDataTables.Add(table);
+                _efContext.SDStatuses.Add(new SDStatus(table.Id));
+                _efContext.SDStatuses.AddRange(table.Columns.Select(c => new SDStatus(c.Id)));
             }
             foreach (var column in newColumns)
             {
-                //_controller.AddColumn(column);
+                var tableName = _efContext.SDDataTables.Single(t => t.Id == column.SDDataTableId).Name;
+                _dbTableRepository.TryAddColumn(tableName, column);
+                _efContext.SDColumns.Add(column);
+                _efContext.SDStatuses.Add(new SDStatus(column.Id));
             }
+            _efContext.SaveChanges();
         }
 
         private void RemoveDeletedRemoteEntriesToLocal(SDSchemaObject data)
         {
             var removedTables = _efContext.SDStatuses
                 .Where(s => !data.SDDataTables.Any(t => t.Id == s.Id))
+                .Select(s => _efContext.SDDataTables.Single(t => t.Id == s.Id))
                 .ToList();
-
 
             var removedColumns = data.SDColumns
                 .Where(s => !data.SDColumns.Any(c => c.Id == s.Id))
+                .Select(s => _efContext.SDColumns.Single(c => c.Id == s.Id))
                 .ToList();
 
             foreach (var table in removedTables)
             {
-                //_controller.RemoveTable(table);
+                _dbTableRepository.Remove(table);
+                _efContext.SDDataTables.Remove(table);
+                _efContext.SDStatuses.Remove(new SDStatus(table.Id));
+                _efContext.SDStatuses.RemoveRange(table.Columns.Select(c => new SDStatus(c.Id)));
             }
             foreach (var column in removedColumns)
             {
-                //_controller.RemoveColumn(column);
+                var tableName = _efContext.SDDataTables.Single(t => t.Id == column.SDDataTableId).Name;
+                _dbTableRepository.RemoveColumn(tableName, column);
+                _efContext.SDColumns.Remove(column);
+                _efContext.SDStatuses.Remove(new SDStatus(column.Id));
             }
+            _efContext.SaveChanges();
         }
 
         public async Task CopyNewLocalEntriesToRemote()
@@ -112,7 +132,7 @@ namespace EFTest.Services
 
             var newColumns = _efContext.SDColumns
                 .Where(column => !_efContext.SDStatuses.Any(s => s.Id == column.Id))
-                .Where(column => !newTables.Any(t => t.Columns.Any(c =>  c.Id != column.SDDataTableId)))
+                .Where(column => !newTables.Any(t => t.Columns.Any(c => c.Id != column.SDDataTableId)))
                 .ToList();
 
             var schemaObject = new SDSchemaObject(newTables, newColumns);

@@ -27,7 +27,7 @@ namespace EFTest.Controllers
             _efContext = new ApplicationDbContext();
             _adoContext = new AdoContext();
             _dbTableRepository = new DbTableRepository(_adoContext);
-            _syncService = new SyncService(this, _efContext);
+            _syncService = new SyncService(this, _efContext, _dbTableRepository);
         }
 
         internal void LoadData()
@@ -58,7 +58,7 @@ namespace EFTest.Controllers
             var sdDataTable = _efContext.SDDataTables.Single(c => c.Name == dataTable.TableName);
             var column = _efContext.SDColumns.Single(c => c.SDDataTableId == sdDataTable.Id && c.Name == columnName);
 
-            _dbTableRepository.DropColumn(dataTable.TableName, column);
+            _dbTableRepository.RemoveColumn(dataTable.TableName, column);
             _efContext.SDColumns.Remove(column);
             _efContext.SaveChanges();
 

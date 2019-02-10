@@ -29,7 +29,31 @@ namespace EFTest.Repository
 
         public string GetSqlString()
         {
-            return $"{Name} {Type} {(string.IsNullOrEmpty(Default) ? "" : $"DEFAULT ({Default})")} {(IsPrimaryKey ? "PRIMARY KEY" : "")} {(NotNull ? "NOT NULL": "")}";
+            return $"{Name} {Type} {(string.IsNullOrEmpty(Default) ? "" : $"DEFAULT ({Default})")} {(IsPrimaryKey ? "PRIMARY KEY" : "")} {(NotNull ? "NOT NULL" : "")}";
+        }
+
+        public Type GetCSharpType()
+        {
+            if (Type == "INTEGER")
+            {
+                return typeof(int);
+            }
+            else if (Type =="DOUBLE" )
+            {
+                return typeof(double);
+            }
+            else if (Type == "BOOLEAN")
+            {
+                return typeof(bool);
+            }
+            else if (Type == "DATETIME")
+            {
+                return typeof(DateTime);
+            }
+            else
+            {
+                return typeof(string);
+            }
         }
     }
 
@@ -57,6 +81,73 @@ namespace EFTest.Repository
             {
                 command.ExecuteNonQuery();
             }
+        }
+
+
+        public void TryAdd(SDDataTable table)
+        {
+            var columnDefinitions = table.Columns
+                .Select(c => $"{c.Name} {c.GetSqlType()}")
+                .Aggregate((current, next) => $"{current}, {next}");
+
+            var query = $"CREATE TABLE {table.Name}({columnDefinitions})";
+
+            if (!_context.TableExists(table.Name))
+            {
+                using (var connection = _context.GetConnection())
+                using (var command = new SQLiteCommand(query, connection))
+                {
+                    command.ExecuteNonQuery();
+                }
+            }
+            else
+            {
+                foreach (var column in table.Columns)
+                {
+                    var canAdd = TryAddColumn(table.Name, column);
+                    if (!canAdd)
+                    {
+                        throw new NotImplementedException("Implement Column conflict");
+                    }
+                }
+            }
+        }
+
+        public bool TryAddColumn(string tableName, SDColumn column)
+        {
+            if (!_context.TableExists(tableName))
+            {
+                return false;
+            }
+
+            var columns = GetColumns(tableName);
+            var columnAlreadyExists = columns.Any(c => c.Name == column.Name);
+
+            if (!columnAlreadyExists)
+            {
+                var query = $"ALTER TABLE {tableName} ADD COLUMN {column.Name} {column.GetSqlType()}";
+
+                using (var connection = _context.GetConnection())
+                using (var command = new SQLiteCommand(query, connection))
+                {
+                    command.ExecuteNonQuery();
+                }
+
+                return true;
+            }
+            else
+            {
+                var duplicateColumn = columns.Single(c => c.Name == column.Name);
+                if (duplicateColumn.GetCSharpType() == Type.GetType(column.DataType))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
         }
 
         public void AddColumn(string tableName, SDColumn column)
@@ -92,7 +183,7 @@ namespace EFTest.Repository
             return columns;
         }
 
-        public void DropColumn(string tableName, SDColumn column)
+        public void RemoveColumn(string tableName, SDColumn column)
         {
             var tempTable = $"_{tableName}";
             var columns = GetColumns(tableName).Where(c => c.Name != column.Name);
