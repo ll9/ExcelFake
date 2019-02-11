@@ -126,7 +126,7 @@ namespace EFTest.Repository
             }
 
             var columns = GetColumns(tableName);
-            var columnAlreadyExists = columns.Any(c => c.Name == column.Name);
+            var columnAlreadyExists = columns.Any(c => c.Name.Equals(column.Name, StringComparison.OrdinalIgnoreCase));
 
             if (!columnAlreadyExists)
             {
