@@ -41,7 +41,7 @@ namespace EFTest.Data
 
         public bool TableExists(string tableName)
         {
-            var query = $"SELECT count(*) FROM sqlite_master WHERE type='table' and name = @name";
+            var query = $"SELECT count(*) FROM sqlite_master WHERE type='table' and UPPER(name) = UPPER(@name)";
 
             using (var conneciton = GetConnection())
             using (var command = new SQLiteCommand(query, conneciton))
