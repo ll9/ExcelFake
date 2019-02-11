@@ -89,7 +89,7 @@ namespace EFTest.Services
                 }
                 else
                 {
-                    var tableInContext = _efContext.SDDataTables.Include(t => t.Columns).Single(t => t.Name == table.Name);
+                    var tableInContext = _efContext.SDDataTables.Include(t => t.Columns).Single(t => t.Name.Equals(table.Name, StringComparison.OrdinalIgnoreCase));
                     _efContext.SDDataTables.Remove(tableInContext);
                     _efContext.SaveChanges();
                     tableInContext.Id = table.Id;
@@ -116,11 +116,11 @@ namespace EFTest.Services
                 }
                 else if (result == ColumnAddState.DuplicateWithoutConflict)
                 {
-                    var columnInContext = _efContext.SDColumns.Single(t => t.Name == column.Name);
+                    var columnInContext = _efContext.SDColumns.Single(t => t.Name.Equals(column.Name, StringComparison.OrdinalIgnoreCase));
                     _efContext.SDColumns.Remove(columnInContext);
                     _efContext.SaveChanges();
                     columnInContext.Id = column.Id;
-                    _efContext.SDColumns.Update(columnInContext);
+                    _efContext.SDColumns.Add(columnInContext);
                     _efContext.SDStatuses.Add(new SDStatus(column.Id));
                 }
                 else
