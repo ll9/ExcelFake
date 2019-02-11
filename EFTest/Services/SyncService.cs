@@ -73,23 +73,28 @@ namespace EFTest.Services
                 .ToList();
 
             var newColumns = data.SDDataTables
-                .Except(newTables)
                 .SelectMany(t => t.Columns)
                 .Where(remote => !_efContext.SDStatuses.Any(local => local.Id == remote.Id))
                 .ToList();
 
             foreach (var table in newTables)
             {
-                _dbTableRepository.TryAdd(table);
-                //TODO: broken
-                //_efContext.SDDataTables.AddOrUpdate(table);
+                // Remove Navigation Property in order to take care of it manually later
+                table.Columns = null;
+
+                var createdEmptyTable = _dbTableRepository.TryCreateEmptyTable(table);
+                if (createdEmptyTable)
+                {
+                    _efContext.SDDataTables.Add(table);
+                }
                 _efContext.SDStatuses.Add(new SDStatus(table.Id));
-                _efContext.SDStatuses.AddRange(table.Columns.Select(c => new SDStatus(c.Id)));
             }
             foreach (var column in newColumns)
             {
                 var tableName = _efContext.SDDataTables.Single(t => t.Id == column.SDDataTableId).Name;
+
                 _dbTableRepository.TryAddColumn(tableName, column);
+
                 _efContext.SDColumns.Upsert(column);
                 _efContext.SDStatuses.Add(new SDStatus(column.Id));
             }
