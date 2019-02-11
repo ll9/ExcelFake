@@ -184,12 +184,19 @@
     <Compile Include="Facades\SyncTableFacade.cs" />
     <Compile Include="Models\SDSchemaObject.cs" />
     <Compile Include="Services\SyncService.cs" />
+    <Compile Include="ViewModels\AddTableViewModel.cs" />
     <Compile Include="ViewModels\ColumnViewModel.cs" />
     <Compile Include="Views\AddColumnDialog.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Views\AddColumnDialog.Designer.cs">
       <DependentUpon>AddColumnDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AddTableDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\AddTableDialog.Designer.cs">
+      <DependentUpon>AddTableDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\MainForm.cs">
       <SubType>Form</SubType>

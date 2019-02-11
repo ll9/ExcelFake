@@ -16,5 +16,17 @@ namespace EFTest.Views
         {
             InitializeComponent();
         }
+
+        private void CancelButton_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.Cancel;
+            Close();
+        }
+
+        private void OKButton_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.OK;
+            Close();
+        }
     }
 }
