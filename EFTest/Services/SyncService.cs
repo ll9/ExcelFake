@@ -88,6 +88,7 @@ namespace EFTest.Services
                     _efContext.SDDataTables.Add(table);
                 }
                 _efContext.SDStatuses.Add(new SDStatus(table.Id));
+                _efContext.SaveChanges();
             }
             foreach (var column in newColumns)
             {
