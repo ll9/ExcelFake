@@ -230,6 +230,9 @@
     <EmbeddedResource Include="Views\AddColumnDialog.resx">
       <DependentUpon>AddColumnDialog.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\AddTableDialog.resx">
+      <DependentUpon>AddTableDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -244,6 +247,7 @@
     <None Include="Properties\DataSources\EFTest.Models.SDStatus.datasource" />
     <None Include="Properties\DataSources\EFTest.Models.SDTextBoxColumn.datasource" />
     <None Include="Properties\DataSources\EFTest.Models.TypeExtension.datasource" />
+    <None Include="Properties\DataSources\EFTest.ViewModels.AddTableViewModel.datasource" />
     <None Include="Properties\DataSources\EFTest.ViewModels.ColumnViewModel.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

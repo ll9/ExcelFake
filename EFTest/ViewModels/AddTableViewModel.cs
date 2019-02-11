@@ -12,7 +12,7 @@ namespace EFTest.ViewModels
     {
         private string _name;
         public string Name { get => _name; set => SetField(ref _name, value); }
-        private ICollection<ColumnViewModel> _columnViewModels = new List<ColumnViewModel>();
+        private ICollection<ColumnViewModel> _columnViewModels = new BindingList<ColumnViewModel>();
         public ICollection<ColumnViewModel> ColumnViewModels { get => _columnViewModels; set => SetField(ref _columnViewModels, value); }
 
         public bool IsValid { get => !string.IsNullOrEmpty(Name); }

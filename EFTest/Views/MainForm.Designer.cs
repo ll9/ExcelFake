@@ -34,6 +34,7 @@
             this.spalteEinfügenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.spalteLöschenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.button1 = new System.Windows.Forms.Button();
+            this.AddTableButton = new System.Windows.Forms.Button();
             this.ColumnMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -56,14 +57,14 @@
             // spalteEinfügenToolStripMenuItem
             // 
             this.spalteEinfügenToolStripMenuItem.Name = "spalteEinfügenToolStripMenuItem";
-            this.spalteEinfügenToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.spalteEinfügenToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
             this.spalteEinfügenToolStripMenuItem.Text = "Spalte einfügen";
             this.spalteEinfügenToolStripMenuItem.Click += new System.EventHandler(this.spalteEinfügenToolStripMenuItem_Click);
             // 
             // spalteLöschenToolStripMenuItem
             // 
             this.spalteLöschenToolStripMenuItem.Name = "spalteLöschenToolStripMenuItem";
-            this.spalteLöschenToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.spalteLöschenToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
             this.spalteLöschenToolStripMenuItem.Text = "Spalte löschen";
             this.spalteLöschenToolStripMenuItem.Click += new System.EventHandler(this.spalteLöschenToolStripMenuItem_Click);
             // 
@@ -77,11 +78,22 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // AddTableButton
+            // 
+            this.AddTableButton.Location = new System.Drawing.Point(795, 56);
+            this.AddTableButton.Name = "AddTableButton";
+            this.AddTableButton.Size = new System.Drawing.Size(94, 23);
+            this.AddTableButton.TabIndex = 2;
+            this.AddTableButton.Text = "Add Table";
+            this.AddTableButton.UseVisualStyleBackColor = true;
+            this.AddTableButton.Click += new System.EventHandler(this.AddTableButton_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1043, 439);
+            this.Controls.Add(this.AddTableButton);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.GridTabControl);
             this.Name = "MainForm";
@@ -98,6 +110,7 @@
         private System.Windows.Forms.ToolStripMenuItem spalteEinfügenToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem spalteLöschenToolStripMenuItem;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button AddTableButton;
     }
 }
 

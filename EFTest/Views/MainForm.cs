@@ -99,5 +99,10 @@ namespace EFTest
         {
             _controller.SyncSchema();
         }
+
+        private void AddTableButton_Click(object sender, EventArgs e)
+        {
+            new AddTableDialog().ShowDialog();
+        }
     }
 }

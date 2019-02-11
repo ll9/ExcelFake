@@ -31,17 +31,17 @@
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.Label nameLabel;
             this.nameTextBox = new System.Windows.Forms.TextBox();
-            this.addTableViewModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.columnViewModelsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.columnViewModelsDataGridView = new System.Windows.Forms.DataGridView();
-            this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataTypeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.OKButton = new System.Windows.Forms.Button();
             this.CancelButton = new System.Windows.Forms.Button();
+            this.addTableViewModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataTypeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.columnViewModelsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             nameLabel = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.columnViewModelsDataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.addTableViewModelBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.columnViewModelsBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.columnViewModelsDataGridView)).BeginInit();
             this.SuspendLayout();
             // 
             // nameLabel
@@ -59,15 +59,7 @@
             this.nameTextBox.Location = new System.Drawing.Point(82, 26);
             this.nameTextBox.Name = "nameTextBox";
             this.nameTextBox.Size = new System.Drawing.Size(210, 20);
-            this.nameTextBox.TabIndex = 2;
-            // 
-            // addTableViewModelBindingSource
-            // 
-            this.addTableViewModelBindingSource.DataSource = typeof(EFTest.ViewModels.AddTableViewModel);
-            // 
-            // columnViewModelsBindingSource
-            // 
-            this.columnViewModelsBindingSource.DataSource = typeof(EFTest.ViewModels.ColumnViewModel);
+            this.nameTextBox.TabIndex = 1;
             // 
             // columnViewModelsDataGridView
             // 
@@ -82,20 +74,7 @@
             this.columnViewModelsDataGridView.Name = "columnViewModelsDataGridView";
             this.columnViewModelsDataGridView.Size = new System.Drawing.Size(251, 220);
             this.columnViewModelsDataGridView.TabIndex = 2;
-            // 
-            // nameDataGridViewTextBoxColumn
-            // 
-            this.nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
-            this.nameDataGridViewTextBoxColumn.HeaderText = "Name";
-            this.nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
-            // 
-            // dataTypeDataGridViewTextBoxColumn
-            // 
-            this.dataTypeDataGridViewTextBoxColumn.DataPropertyName = "DataType";
-            this.dataTypeDataGridViewTextBoxColumn.HeaderText = "DataType";
-            this.dataTypeDataGridViewTextBoxColumn.Name = "dataTypeDataGridViewTextBoxColumn";
-            this.dataTypeDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataTypeDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.columnViewModelsDataGridView.DefaultValuesNeeded += new System.Windows.Forms.DataGridViewRowEventHandler(this.columnViewModelsDataGridView_DefaultValuesNeeded);
             // 
             // OKButton
             // 
@@ -118,6 +97,28 @@
             this.CancelButton.UseVisualStyleBackColor = true;
             this.CancelButton.Click += new System.EventHandler(this.CancelButton_Click);
             // 
+            // addTableViewModelBindingSource
+            // 
+            this.addTableViewModelBindingSource.DataSource = typeof(EFTest.ViewModels.AddTableViewModel);
+            // 
+            // nameDataGridViewTextBoxColumn
+            // 
+            this.nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
+            this.nameDataGridViewTextBoxColumn.HeaderText = "Name";
+            this.nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
+            // 
+            // dataTypeDataGridViewTextBoxColumn
+            // 
+            this.dataTypeDataGridViewTextBoxColumn.DataPropertyName = "DataType";
+            this.dataTypeDataGridViewTextBoxColumn.HeaderText = "DataType";
+            this.dataTypeDataGridViewTextBoxColumn.Name = "dataTypeDataGridViewTextBoxColumn";
+            this.dataTypeDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataTypeDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // columnViewModelsBindingSource
+            // 
+            this.columnViewModelsBindingSource.DataSource = typeof(EFTest.ViewModels.ColumnViewModel);
+            // 
             // AddTableDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -130,9 +131,9 @@
             this.Controls.Add(this.nameTextBox);
             this.Name = "AddTableDialog";
             this.Text = "AddTableDialog";
+            ((System.ComponentModel.ISupportInitialize)(this.columnViewModelsDataGridView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.addTableViewModelBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.columnViewModelsBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.columnViewModelsDataGridView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -147,6 +148,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewComboBoxColumn dataTypeDataGridViewTextBoxColumn;
         private System.Windows.Forms.Button OKButton;
-        private System.Windows.Forms.Button CancelButton;
+        private new System.Windows.Forms.Button CancelButton;
     }
 }
