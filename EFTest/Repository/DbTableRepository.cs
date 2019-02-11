@@ -38,7 +38,7 @@ namespace EFTest.Repository
             {
                 return typeof(int);
             }
-            else if (Type =="DOUBLE" )
+            else if (Type == "DOUBLE")
             {
                 return typeof(double);
             }
@@ -69,8 +69,11 @@ namespace EFTest.Repository
 
         public void Add(SDDataTable table)
         {
-            var columnDefinitions = table.Columns
-                .Select(c => $"{c.Name} {c.GetSqlType()}")
+            var columnDefinitions = (new[] { "Id TEXT DEFAULT (HEX(RANDOMBLOB(16))) PRIMARY KEY" })
+                .Concat(
+                    table.Columns
+                    .Select(c => $"{c.Name} {c.GetSqlType()}")
+                )
                 .Aggregate((current, next) => $"{current}, {next}");
 
             var query = $"CREATE TABLE {table.Name}({columnDefinitions})";

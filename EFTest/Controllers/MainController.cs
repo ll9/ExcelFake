@@ -69,5 +69,22 @@ namespace EFTest.Controllers
         {
             _syncService.Synchronize();
         }
+
+        internal void AddTable(AddTableViewModel addTableViewModel)
+        {
+            string tableId = Guid.NewGuid().ToString();
+            var sdTable = new SDDataTable(
+                tableId,
+                addTableViewModel.Name, true,
+                addTableViewModel.ColumnViewModels.Select(c => new SDColumn(Guid.NewGuid().ToString(), c.Name, c.DataType, true, tableId)).ToList()
+                );
+
+            _dbTableRepository.Add(sdTable);
+            _efContext.SDDataTables.Add(sdTable);
+            _efContext.SaveChanges();
+
+            var table = _dbTableRepository.List(sdTable);
+            _view.AddGrid(table);
+        }
     }
 }

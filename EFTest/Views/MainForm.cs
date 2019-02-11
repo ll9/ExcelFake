@@ -102,7 +102,11 @@ namespace EFTest
 
         private void AddTableButton_Click(object sender, EventArgs e)
         {
-            new AddTableDialog().ShowDialog();
+            var dialog = new AddTableDialog();
+            if (dialog.ShowDialog() == DialogResult.OK)
+            {
+                _controller.AddTable(dialog.AddTableViewModel);
+            }
         }
     }
 }
