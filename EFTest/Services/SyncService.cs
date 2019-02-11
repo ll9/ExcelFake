@@ -87,6 +87,20 @@ namespace EFTest.Services
                 {
                     _efContext.SDDataTables.Add(table);
                 }
+                else
+                {
+                    var tableInContext = _efContext.SDDataTables.Include(t => t.Columns).Single(t => t.Name == table.Name);
+                    _efContext.SDDataTables.Remove(tableInContext);
+                    _efContext.SaveChanges();
+                    tableInContext.Id = table.Id;
+                    foreach (var col in tableInContext.Columns)
+                    {
+                        col.SDDataTableId = table.Id;
+                    }
+                    tableInContext.Columns = null;
+                    _efContext.SDDataTables.Add(tableInContext);
+
+                }
                 _efContext.SDStatuses.Add(new SDStatus(table.Id));
                 _efContext.SaveChanges();
             }
@@ -102,6 +116,11 @@ namespace EFTest.Services
                 }
                 else if (result == ColumnAddState.DuplicateWithoutConflict)
                 {
+                    var columnInContext = _efContext.SDColumns.Single(t => t.Name == column.Name);
+                    _efContext.SDColumns.Remove(columnInContext);
+                    _efContext.SaveChanges();
+                    columnInContext.Id = column.Id;
+                    _efContext.SDColumns.Update(columnInContext);
                     _efContext.SDStatuses.Add(new SDStatus(column.Id));
                 }
                 else
@@ -119,14 +138,15 @@ namespace EFTest.Services
             var removedTables = _efContext.SDStatuses
                 .Where(s => !data.SDDataTables.Any(t => t.Id == s.Id))
                 .Select(s => _efContext.SDDataTables.SingleOrDefault(t => t.Id == s.Id))
+                .Where(s => s != null)
                 .ToList();
-            removedTables.RemoveAll(i => i == null);
 
-            var removedColumns = data.SDColumns
-                .Where(s => !data.SDColumns.Any(c => c.Id == s.Id))
-                .Select(s => _efContext.SDColumns.SingleOrDefault(c => c.Id == s.Id))
+            var removedColumns = _efContext.SDStatuses
+                .Where(s => !data.SDDataTables.SelectMany(t => t.Columns).Any(c => c.Id == s.Id))
+                .Select(i => _efContext.SDColumns.SingleOrDefault(c => c.Id == i.Id))
+                .Where(i => i != null)
+                .Where(c => !removedTables.Any(t => t.Id != c.SDDataTableId))
                 .ToList();
-            removedColumns.RemoveAll(i => i == null);
 
             foreach (var table in removedTables)
             {
