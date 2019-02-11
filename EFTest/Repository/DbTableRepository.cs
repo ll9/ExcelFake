@@ -10,6 +10,13 @@ using System.Threading.Tasks;
 
 namespace EFTest.Repository
 {
+    enum ColumnAddState
+    {
+        Added,
+        DuplicateWithoutConflict,
+        Conflict
+    }
+
     class SqlColumn
     {
         public SqlColumn(string name, string type, bool notNull, string @default, bool isPrimaryKey)
@@ -111,11 +118,11 @@ namespace EFTest.Repository
 
         }
 
-        public bool TryAddColumn(string tableName, SDColumn column)
+        public ColumnAddState TryAddColumn(string tableName, SDColumn column)
         {
             if (!_context.TableExists(tableName))
             {
-                return false;
+                throw new ArgumentException("table " + tableName + " does not exist");
             }
 
             var columns = GetColumns(tableName);
@@ -131,18 +138,18 @@ namespace EFTest.Repository
                     command.ExecuteNonQuery();
                 }
 
-                return true;
+                return ColumnAddState.Added;
             }
             else
             {
                 var duplicateColumn = columns.Single(c => c.Name == column.Name);
                 if (duplicateColumn.GetCSharpType() == Type.GetType(column.DataType))
                 {
-                    return true;
+                    return ColumnAddState.DuplicateWithoutConflict;
                 }
                 else
                 {
-                    return false;
+                    return ColumnAddState.Conflict;
                 }
             }
 

@@ -93,10 +93,22 @@ namespace EFTest.Services
             {
                 var tableName = _efContext.SDDataTables.Single(t => t.Id == column.SDDataTableId).Name;
 
-                _dbTableRepository.TryAddColumn(tableName, column);
+                var result = _dbTableRepository.TryAddColumn(tableName, column);
+                if (result == ColumnAddState.Added)
+                {
+                    _efContext.SDColumns.Add(column);
+                    _efContext.SDStatuses.Add(new SDStatus(column.Id));
+                }
+                else if (result == ColumnAddState.DuplicateWithoutConflict)
+                {
+                    _efContext.SDStatuses.Add(new SDStatus(column.Id));
+                }
+                else
+                {
+                    throw new Exception("Column Conflict");
+                }
+                _efContext.SaveChanges();
 
-                _efContext.SDColumns.Upsert(column);
-                _efContext.SDStatuses.Add(new SDStatus(column.Id));
             }
             _efContext.SaveChanges();
         }
