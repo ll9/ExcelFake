@@ -34,14 +34,6 @@ namespace EFTest.Data
             modelBuilder.Entity<SDColumn>().Property(s => s.Id).HasDefaultValueSql("HEX(RANDOMBLOB(16))");
             modelBuilder.Entity<SDTextBoxColumn>().Property(s => s.Id).HasDefaultValueSql("HEX(RANDOMBLOB(16))");
             modelBuilder.Entity<SDProject>().Property(s => s.Id).HasDefaultValueSql("HEX(RANDOMBLOB(16))");
-
-
-            var tableId = Guid.NewGuid().ToString();
-            modelBuilder.Entity<SDProject>().HasData(new SDProject { Id = Guid.NewGuid().ToString()});
-            modelBuilder.Entity<SDDataTable>().HasData(new SDDataTable(tableId, "testtable", true));
-            modelBuilder.Entity<SDColumn>().HasData(new SDColumn(Guid.NewGuid().ToString(), "stringCol", typeof(string).ToString(), true, tableId));
-            modelBuilder.Entity<SDColumn>().HasData(new SDColumn(Guid.NewGuid().ToString(), "intCol", typeof(int).ToString(), true, tableId));
-            modelBuilder.Entity<SDColumn>().HasData(new SDColumn(Guid.NewGuid().ToString(), "dateTimeCol", typeof(DateTime).ToString(), true, tableId));
         }
     }
 }

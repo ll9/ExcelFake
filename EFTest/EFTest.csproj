@@ -182,6 +182,10 @@
     <Compile Include="Data\ApplicationDbContext.cs" />
     <Compile Include="Extensions\DbExtension.cs" />
     <Compile Include="Facades\SyncTableFacade.cs" />
+    <Compile Include="Migrations\20190211200427_StatusTable.cs" />
+    <Compile Include="Migrations\20190211200427_StatusTable.designer.cs">
+      <DependentUpon>20190211200427_StatusTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Models\SDSchemaObject.cs" />
     <Compile Include="Services\SyncService.cs" />
     <Compile Include="ViewModels\AddTableViewModel.cs" />
