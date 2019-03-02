@@ -181,13 +181,11 @@
     <Compile Include="Data\AdoContext.cs" />
     <Compile Include="Data\ApplicationDbContext.cs" />
     <Compile Include="Extensions\DbExtension.cs" />
-    <Compile Include="Facades\SyncTableFacade.cs" />
     <Compile Include="Migrations\20190211200427_StatusTable.cs" />
     <Compile Include="Migrations\20190211200427_StatusTable.designer.cs">
       <DependentUpon>20190211200427_StatusTable.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\SDSchemaObject.cs" />
-    <Compile Include="Services\SyncService.cs" />
     <Compile Include="ViewModels\AddTableViewModel.cs" />
     <Compile Include="ViewModels\ColumnViewModel.cs" />
     <Compile Include="Views\AddColumnDialog.cs">
@@ -265,6 +263,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Services\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\SQLitePCLRaw.lib.e_sqlite3.linux.1.1.11\build\net35\SQLitePCLRaw.lib.e_sqlite3.linux.targets" Condition="Exists('..\packages\SQLitePCLRaw.lib.e_sqlite3.linux.1.1.11\build\net35\SQLitePCLRaw.lib.e_sqlite3.linux.targets')" />

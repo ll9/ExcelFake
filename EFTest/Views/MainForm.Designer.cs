@@ -33,7 +33,6 @@
             this.ColumnMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.spalteEinfügenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.spalteLöschenToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.button1 = new System.Windows.Forms.Button();
             this.AddTableButton = new System.Windows.Forms.Button();
             this.ColumnMenuStrip.SuspendLayout();
             this.SuspendLayout();
@@ -68,16 +67,6 @@
             this.spalteLöschenToolStripMenuItem.Text = "Spalte löschen";
             this.spalteLöschenToolStripMenuItem.Click += new System.EventHandler(this.spalteLöschenToolStripMenuItem_Click);
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(795, 13);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(94, 23);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "Sync Schema";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
             // AddTableButton
             // 
             this.AddTableButton.Location = new System.Drawing.Point(795, 56);
@@ -94,7 +83,6 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1043, 439);
             this.Controls.Add(this.AddTableButton);
-            this.Controls.Add(this.button1);
             this.Controls.Add(this.GridTabControl);
             this.Name = "MainForm";
             this.Text = "Form1";
@@ -109,7 +97,6 @@
         private System.Windows.Forms.ContextMenuStrip ColumnMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem spalteEinfügenToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem spalteLöschenToolStripMenuItem;
-        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button AddTableButton;
     }
 }
