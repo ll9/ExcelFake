@@ -44,29 +44,29 @@
             // dataTypeLabel
             // 
             dataTypeLabel.AutoSize = true;
-            dataTypeLabel.Location = new System.Drawing.Point(12, 9);
+            dataTypeLabel.Location = new System.Drawing.Point(12, 43);
             dataTypeLabel.Name = "dataTypeLabel";
             dataTypeLabel.Size = new System.Drawing.Size(60, 13);
-            dataTypeLabel.TabIndex = 1;
+            dataTypeLabel.TabIndex = 2;
             dataTypeLabel.Text = "Data Type:";
             // 
             // nameLabel
             // 
             nameLabel.AutoSize = true;
-            nameLabel.Location = new System.Drawing.Point(12, 36);
+            nameLabel.Location = new System.Drawing.Point(12, 16);
             nameLabel.Name = "nameLabel";
             nameLabel.Size = new System.Drawing.Size(38, 13);
-            nameLabel.TabIndex = 3;
+            nameLabel.TabIndex = 0;
             nameLabel.Text = "Name:";
             // 
             // dataTypeComboBox
             // 
             this.dataTypeComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.dataTypeComboBox.FormattingEnabled = true;
-            this.dataTypeComboBox.Location = new System.Drawing.Point(78, 6);
+            this.dataTypeComboBox.Location = new System.Drawing.Point(78, 40);
             this.dataTypeComboBox.Name = "dataTypeComboBox";
             this.dataTypeComboBox.Size = new System.Drawing.Size(121, 21);
-            this.dataTypeComboBox.TabIndex = 2;
+            this.dataTypeComboBox.TabIndex = 3;
             // 
             // sDColumnBindingSource
             // 
@@ -75,10 +75,10 @@
             // nameTextBox
             // 
             this.nameTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.sDColumnBindingSource, "Name", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.nameTextBox.Location = new System.Drawing.Point(78, 33);
+            this.nameTextBox.Location = new System.Drawing.Point(78, 13);
             this.nameTextBox.Name = "nameTextBox";
             this.nameTextBox.Size = new System.Drawing.Size(121, 20);
-            this.nameTextBox.TabIndex = 4;
+            this.nameTextBox.TabIndex = 1;
             // 
             // OKButton
             // 
@@ -86,7 +86,7 @@
             this.OKButton.Location = new System.Drawing.Point(78, 76);
             this.OKButton.Name = "OKButton";
             this.OKButton.Size = new System.Drawing.Size(40, 23);
-            this.OKButton.TabIndex = 5;
+            this.OKButton.TabIndex = 4;
             this.OKButton.Text = "OK";
             this.OKButton.UseVisualStyleBackColor = true;
             this.OKButton.Click += new System.EventHandler(this.OKButton_Click);
@@ -96,7 +96,7 @@
             this.CancelButton.Location = new System.Drawing.Point(124, 76);
             this.CancelButton.Name = "CancelButton";
             this.CancelButton.Size = new System.Drawing.Size(75, 23);
-            this.CancelButton.TabIndex = 6;
+            this.CancelButton.TabIndex = 5;
             this.CancelButton.Text = "Abbrechen";
             this.CancelButton.UseVisualStyleBackColor = true;
             this.CancelButton.Click += new System.EventHandler(this.CancelButton_Click);

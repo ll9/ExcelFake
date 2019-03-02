@@ -35,9 +35,9 @@ namespace EFTest.Views
 
             dataTypeComboBox.DataSource = new List<DisplayValue<string>>
             {
+                new DisplayValue<string>("Text", typeof(string).ToString()),
                 new DisplayValue<string>("Zahl", typeof(double).ToString()),
                 new DisplayValue<string>("Datum", typeof(DateTime).ToString()),
-                new DisplayValue<string>("Text", typeof(string).ToString()),
             };
             dataTypeComboBox.DisplayMember = nameof(DisplayValue<object>.Display);
             dataTypeComboBox.ValueMember = nameof(DisplayValue<object>.Value);
