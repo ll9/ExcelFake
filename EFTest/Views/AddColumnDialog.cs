@@ -31,7 +31,7 @@ namespace EFTest.Views
         public AddColumnDialog()
         {
             InitializeComponent();
-            dataTypeComboBox.DataBindings.Add(nameof(dataTypeComboBox.SelectedValue), sDColumnBindingSource, nameof(SDColumn.DataType));
+            dataTypeComboBox.DataBindings.Add(nameof(dataTypeComboBox.SelectedText), sDColumnBindingSource, nameof(SDColumn.DataType));
 
             dataTypeComboBox.DataSource = new List<DisplayValue<string>>
             {

@@ -237,7 +237,6 @@
     <EmbeddedResource Include="Views\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <None Include="db.sqlite" />
     <None Include="packages.config" />
     <None Include="Properties\DataSources\EFTest.Models.SDColumn.datasource" />
     <None Include="Properties\DataSources\EFTest.Models.SDComboboxColumn.datasource" />
