@@ -31,16 +31,16 @@
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.Label nameLabel;
             this.nameTextBox = new System.Windows.Forms.TextBox();
-            this.columnViewModelsDataGridView = new System.Windows.Forms.DataGridView();
-            this.OKButton = new System.Windows.Forms.Button();
-            this.CancelButton = new System.Windows.Forms.Button();
             this.addTableViewModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.columnViewModelsDataGridView = new System.Windows.Forms.DataGridView();
             this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataTypeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.columnViewModelsBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.OKButton = new System.Windows.Forms.Button();
+            this.CancelButton = new System.Windows.Forms.Button();
             nameLabel = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.columnViewModelsDataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.addTableViewModelBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.columnViewModelsDataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.columnViewModelsBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
@@ -61,6 +61,10 @@
             this.nameTextBox.Size = new System.Drawing.Size(210, 20);
             this.nameTextBox.TabIndex = 1;
             // 
+            // addTableViewModelBindingSource
+            // 
+            this.addTableViewModelBindingSource.DataSource = typeof(EFTest.ViewModels.AddTableViewModel);
+            // 
             // columnViewModelsDataGridView
             // 
             this.columnViewModelsDataGridView.AutoGenerateColumns = false;
@@ -75,6 +79,24 @@
             this.columnViewModelsDataGridView.Size = new System.Drawing.Size(251, 220);
             this.columnViewModelsDataGridView.TabIndex = 2;
             this.columnViewModelsDataGridView.DefaultValuesNeeded += new System.Windows.Forms.DataGridViewRowEventHandler(this.columnViewModelsDataGridView_DefaultValuesNeeded);
+            // 
+            // nameDataGridViewTextBoxColumn
+            // 
+            this.nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
+            this.nameDataGridViewTextBoxColumn.HeaderText = "Name";
+            this.nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
+            // 
+            // dataTypeDataGridViewTextBoxColumn
+            // 
+            this.dataTypeDataGridViewTextBoxColumn.DataPropertyName = "DataType";
+            this.dataTypeDataGridViewTextBoxColumn.HeaderText = "DataType";
+            this.dataTypeDataGridViewTextBoxColumn.Name = "dataTypeDataGridViewTextBoxColumn";
+            this.dataTypeDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataTypeDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // columnViewModelsBindingSource
+            // 
+            this.columnViewModelsBindingSource.DataSource = typeof(EFTest.ViewModels.ColumnViewModel);
             // 
             // OKButton
             // 
@@ -97,28 +119,6 @@
             this.CancelButton.UseVisualStyleBackColor = true;
             this.CancelButton.Click += new System.EventHandler(this.CancelButton_Click);
             // 
-            // addTableViewModelBindingSource
-            // 
-            this.addTableViewModelBindingSource.DataSource = typeof(EFTest.ViewModels.AddTableViewModel);
-            // 
-            // nameDataGridViewTextBoxColumn
-            // 
-            this.nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
-            this.nameDataGridViewTextBoxColumn.HeaderText = "Name";
-            this.nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
-            // 
-            // dataTypeDataGridViewTextBoxColumn
-            // 
-            this.dataTypeDataGridViewTextBoxColumn.DataPropertyName = "DataType";
-            this.dataTypeDataGridViewTextBoxColumn.HeaderText = "DataType";
-            this.dataTypeDataGridViewTextBoxColumn.Name = "dataTypeDataGridViewTextBoxColumn";
-            this.dataTypeDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.dataTypeDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            // 
-            // columnViewModelsBindingSource
-            // 
-            this.columnViewModelsBindingSource.DataSource = typeof(EFTest.ViewModels.ColumnViewModel);
-            // 
             // AddTableDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -131,8 +131,8 @@
             this.Controls.Add(this.nameTextBox);
             this.Name = "AddTableDialog";
             this.Text = "AddTableDialog";
-            ((System.ComponentModel.ISupportInitialize)(this.columnViewModelsDataGridView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.addTableViewModelBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.columnViewModelsDataGridView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.columnViewModelsBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
