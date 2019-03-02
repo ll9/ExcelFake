@@ -215,7 +215,6 @@
     <Compile Include="Models\SDColumn.cs" />
     <Compile Include="Models\SDComboboxColumn.cs" />
     <Compile Include="Models\SDDataTable.cs" />
-    <Compile Include="Models\SDStatus.cs" />
     <Compile Include="Models\SDTextBoxColumn.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
