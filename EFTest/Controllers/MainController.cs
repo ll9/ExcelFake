@@ -25,6 +25,13 @@ namespace EFTest.Controllers
             _efContext = new ApplicationDbContext();
             _adoContext = new AdoContext();
             _dbTableRepository = new DbTableRepository(_adoContext);
+
+            Initialize();
+        }
+
+        private void Initialize()
+        {
+            _efContext.Database.Migrate();
         }
 
         internal void LoadData()
